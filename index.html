@@ -7,18 +7,30 @@
 </head>
 <body>
 <div id="main">
+    <div class="container">
+
+
     <div class="nav">
-    <h1>Welcome to my image board</h1>
+        <h1>Welcome to my image board</h1>
+        <form action="">
+    <input v-model="title" type="text" name="title" placeholder="title">
+    <input v-model="description" type="text" name="description" placeholder="description">
+    <input v-model="username" type="text" name="username" placeholder="username">
+    <input @change="selectFile" type="file" name="file" accept="image/*">
+    <button @click.prevent.default="upload">Upload</button>
+</form>
     </div>
+      <h2>lastest images</h2>
     
-  <div class="container">
-      <h2>latest images</h2>
+  <div class="img_container">
    <div class="card" v-for="image in images">
         <img :src="image.url" v-bind:key="image.id"/>
         <p>{{image.title}}</p>
 
     </div>
   </div>
+    </div>
+  
  
 
 

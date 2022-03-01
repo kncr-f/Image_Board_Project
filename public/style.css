@@ -3,7 +3,24 @@
     box-sizing: border-box;
     background-color: ghostwhite;
 }
-
 .container {
+    background-color: aquamarine;
+}
+.img_container {
     display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-gap: 10px 10px;
+}
+.card {
+    border: 1px solid black;
+    border-radius: 2px;
+    margin: 10px;
+}
+.card img {
+    width: 350px;
+    height: 200px;
+    display: block;
+    object-fit: cover;
+    padding: 6px;
+    border-radius: 2px;
 }
