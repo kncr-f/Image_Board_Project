@@ -28,7 +28,7 @@ const uploder = multer({
 app.use(express.static('./public'));
 
 app.use(express.json());    //this middleware helps us properly access 
-//incoming requests of contetn type application/json
+//incoming requests of content type application/json
 
 
 app.get("/getImages", (req, res) => {
@@ -47,10 +47,10 @@ app.post("/upload", uploder.single("file"), s3.upload, (req, res) => {
     const { title, description, username } = req.body;
     let url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`
     console.log("req.file...", req.file);
-    // console.log('req.file', req.file);
+
     // console.log('req.body', req.body);
 
-    db.uploadImage(url, title, description, username)
+    db.uploadImage(url, username, title, description)
         .then(({ rows }) => {
             console.log("uploadImage in server...", rows);
             res.json(rows);

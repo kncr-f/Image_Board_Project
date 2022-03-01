@@ -17,7 +17,7 @@ const app = Vue.createApp({
         fetch("/getImages")
             .then(resp => resp.json())
             .then(data => {
-                // console.log('data from /getImages', data);
+                console.log('data from /getImages', data);
                 // console.log('this: ', this);
                 this.images = data;
             }).catch(err => console.log('err', err))

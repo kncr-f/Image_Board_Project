@@ -5,16 +5,16 @@
 }
 .container {
     background-color: aquamarine;
+    margin: 10px;
 }
 .img_container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 354px));
     grid-gap: 10px 10px;
 }
 .card {
     border: 1px solid black;
     border-radius: 2px;
-    margin: 10px;
 }
 .card img {
     width: 350px;
