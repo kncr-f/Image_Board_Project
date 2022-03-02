@@ -1,10 +1,9 @@
 * {
     margin: 0;
     box-sizing: border-box;
-    background-color: ghostwhite;
+    background-color: azure;
 }
 .container {
-    background-color: aquamarine;
     margin: 10px;
 }
 .img_container {
@@ -26,4 +25,37 @@
     object-fit: cover;
     padding: 6px;
     border-radius: 10px;
+}
+
+.img_component {
+    display: flex;
+    justify-self: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: mintcream;
+    padding: 20px;
+    position: absolute;
+    z-index: 1;
+}
+.img_component p,
+h3 {
+    background-color: mintcream;
+    text-align: center;
+}
+
+#close {
+    align-self: end;
+    padding: 8px;
+    background-color: mintcream;
+    cursor: pointer;
+}
+
+#close:hover {
+    font-size: larger;
+}
+
+.img_component img {
+    object-fit: cover;
+    width: 500px;
+    height: 330px;
 }

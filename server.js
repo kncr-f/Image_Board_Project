@@ -45,7 +45,7 @@ app.get("/getImages", (req, res) => {
 
 app.get("/getImageFromId/:id", (req, res) => {
     // console.log('req.body', req.body);
-    console.log('req.params', req.params);
+    //console.log('req.params', req.params);
 
 
     db.getImageFromId(req.params.id)

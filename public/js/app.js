@@ -84,7 +84,7 @@ const app = Vue.createApp({
         },
 
         open: function (arg) {
-            console.log("arg", arg);
+            //console.log("arg", arg);
             this.imageId = arg;
             if (this.imageId) {
                 this.checkForTruthy = true
