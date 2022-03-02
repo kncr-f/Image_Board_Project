@@ -1,4 +1,5 @@
 import * as Vue from './vue.js';
+import myComponent from './myComponent.js';
 // console.log('Vue', Vue);
 
 const app = Vue.createApp({
@@ -8,19 +9,29 @@ const app = Vue.createApp({
             description: "",
             username: "",
             file: null,
-            images: []
+            images: [],
+            checkForTruthy: false,
+            imageId: null
+
         }
     },
+
 
     mounted: function () {
 
         fetch("/getImages")
             .then(resp => resp.json())
             .then(data => {
-                console.log('data from /getImages', data);
-                // console.log('this: ', this);
+                //console.log('data from /getImages', data);
+
                 this.images = data;
+
             }).catch(err => console.log('err', err))
+
+    },
+
+    components: {
+        "my-component": myComponent
     },
 
     methods: {
@@ -60,13 +71,28 @@ const app = Vue.createApp({
                 .then(resp => resp.json())
                 .then((resp) => {
                     console.log('resp in fetch / upload', resp)
-                    this.images.unshift(resp[0])
+                    this.images.unshift(resp)
 
                 })
                 .catch(err => console.log('err in upload', err))
 
 
         },
+
+        close: function () {
+            this.checkForTruthy = false
+        },
+
+        open: function (arg) {
+            console.log("arg", arg);
+            this.imageId = arg;
+            if (this.imageId) {
+                this.checkForTruthy = true
+            }
+
+        }
+
+
 
     }
 

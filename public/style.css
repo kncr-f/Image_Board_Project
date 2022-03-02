@@ -13,8 +13,11 @@
     grid-gap: 10px 10px;
 }
 .card {
-    border: 1px solid black;
-    border-radius: 2px;
+    border: 2px solid black;
+    border-radius: 5px;
+}
+.card p {
+    text-align: center;
 }
 .card img {
     width: 350px;
@@ -22,5 +25,5 @@
     display: block;
     object-fit: cover;
     padding: 6px;
-    border-radius: 2px;
+    border-radius: 10px;
 }

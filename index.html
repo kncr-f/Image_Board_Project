@@ -24,10 +24,13 @@
     
   <div class="img_container">
    <div class="card" v-for="image in images">
-        <img :src="image.url" v-bind:key="image.id"/>
+        <img @click="open(image.id)" :src="image.url" v-bind:key="image.id"/>
         <p>{{image.title}}</p>
 
     </div>
+
+    <my-component v-if="checkForTruthy" :img="imageId" @xclicked="close"></my-component>
+
   </div>
     </div>
   

@@ -43,6 +43,23 @@ app.get("/getImages", (req, res) => {
 
 });
 
+app.get("/getImageFromId/:id", (req, res) => {
+    // console.log('req.body', req.body);
+    console.log('req.params', req.params);
+
+
+    db.getImageFromId(req.params.id)
+        .then(({ rows }) => {
+            //console.log('rows', rows);
+            res.json(rows);
+        }).catch((err) => {
+            console.log('err with getting imageFromId', err)
+        })
+
+});
+
+
+
 app.post("/upload", uploder.single("file"), s3.upload, (req, res) => {
     const { title, description, username } = req.body;
     let url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`
@@ -52,8 +69,8 @@ app.post("/upload", uploder.single("file"), s3.upload, (req, res) => {
 
     db.uploadImage(url, username, title, description)
         .then(({ rows }) => {
-            console.log("uploadImage in server...", rows);
-            res.json(rows);
+            //console.log("uploadImage in server...", rows);
+            res.json(rows[0]);
         }).catch((err) => {
             console.log(err)
         })

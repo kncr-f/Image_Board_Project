@@ -15,3 +15,15 @@ module.exports.uploadImage = (url, username, title, description) => {
         [url, username, title, description]
     )
 }
+
+module.exports.getImageFromId = (id) => {
+    return db.query(`SELECT 
+                    images.id, 
+                    images.url, 
+                    images.username, 
+                    images.title, 
+                    images.description 
+                    FROM images 
+                    WHERE images.id = $1`,
+        [id]);
+}
