@@ -2,16 +2,16 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>IMG Board</title>
+    <title>Image Board</title>
     <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <div id="main">
-    <div class="container">
+    <div class="container"  >
 
 
     <div class="nav">
-        <h1>Welcome to my image board</h1>
+        <h1 >Welcome to my image board</h1>
         <form action="">
     <input v-model="title" type="text" name="title" placeholder="title">
     <input v-model="description" type="text" name="description" placeholder="description">
@@ -22,14 +22,16 @@
     </div>
       <h2>lastest images</h2>
     
-  <div class="img_container">
+  <div class="img_container" >
    <div class="card" v-for="image in images">
         <img @click="open(image.id)" :src="image.url" v-bind:key="image.id"/>
         <p>{{image.title}}</p>
 
     </div>
 
-    <my-component v-if="checkForTruthy" :img="imageId" @xclicked="close"></my-component>
+    <modal-component v-if="checkForTruthy" :img="imageId" @xclicked="close">
+       
+    </modal-component>
 
   </div>
     </div>

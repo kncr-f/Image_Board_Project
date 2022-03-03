@@ -1,15 +1,17 @@
-const myComponent = {
+import comments from './comments.js';
+const modalComponent = {
     data() {
         return {
             image: {},
-            num: 0
+            num: 0,
+            imageId: this.img
         }
     },
     props: ["img"],
 
     mounted() {
         // console.log('myComponent rendered');
-        // console.log("props...", this.img);
+        //console.log("props...", this.img);
 
         fetch(`/getImageFromId/${this.img}`)
             .then(resp => resp.json())
@@ -21,6 +23,9 @@ const myComponent = {
             }).catch(err => console.log('err', err))
 
 
+    },
+    components: {
+        "comments": comments
     },
 
     methods: {
@@ -40,11 +45,11 @@ const myComponent = {
              <h3>{{image.title}}</h3>
              <p>{{image.description}}</p>
              </div>
-             
 
-           
+             <comments :imgchild="imageId"></comments>
+
         </div>
     `
 };
 
-export default myComponent;
+export default modalComponent;

@@ -47,7 +47,6 @@ app.get("/getImageFromId/:id", (req, res) => {
     // console.log('req.body', req.body);
     //console.log('req.params', req.params);
 
-
     db.getImageFromId(req.params.id)
         .then(({ rows }) => {
             //console.log('rows', rows);
@@ -59,8 +58,23 @@ app.get("/getImageFromId/:id", (req, res) => {
 });
 
 
+app.get("/getComments/:imageId", (req, res) => {
+
+    //console.log('req.params.id...', req.params.imageId)
+    db.getCommentsFromImgId(req.params.imageId)
+        .then(({ rows }) => {
+            //console.log('rows', rows);
+            res.json(rows);
+        }).catch((err) => {
+            console.log('err with getting CommentsFromImgId', err)
+        })
+
+});
+
+
 
 app.post("/upload", uploder.single("file"), s3.upload, (req, res) => {
+
     const { title, description, username } = req.body;
     let url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`
     console.log("req.file...", req.file);
@@ -77,6 +91,20 @@ app.post("/upload", uploder.single("file"), s3.upload, (req, res) => {
 
 
 });
+
+app.post("/postComment", (req, res) => {
+    //console.log('req.body', req.body);
+    const { comment, username, img_id } = req.body;
+    db.uploadComment(comment, username, img_id)
+        .then(({ rows }) => {
+            console.log("postComment rows..", rows)
+            res.json(rows[0]);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+
+})
 
 // this route should come below any route that hte server has to serve data to hte client side
 app.get('*', (req, res) => {

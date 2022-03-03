@@ -1,5 +1,5 @@
 import * as Vue from './vue.js';
-import myComponent from './myComponent.js';
+import modalComponent from './modalComponent.js';
 // console.log('Vue', Vue);
 
 const app = Vue.createApp({
@@ -31,7 +31,8 @@ const app = Vue.createApp({
     },
 
     components: {
-        "my-component": myComponent
+        "modal-component": modalComponent,
+
     },
 
     methods: {
@@ -89,6 +90,7 @@ const app = Vue.createApp({
             if (this.imageId) {
                 this.checkForTruthy = true
             }
+
 
         }
 
