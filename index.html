@@ -34,6 +34,7 @@
     </modal-component>
 
   </div>
+  <button v-if="!isHidden" @click.prevent.default="moreImage(images[images.length -1].id)">More</button>
     </div>
   
 

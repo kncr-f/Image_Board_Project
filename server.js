@@ -71,7 +71,18 @@ app.get("/getComments/:imageId", (req, res) => {
 
 });
 
+app.get("/getMoreImages/:lowestId", (req, res) => {
 
+    db.getMoreImages(req.params.lowestId)
+        .then(({ rows }) => {
+            //console.log('rows', rows);
+            res.json(rows);
+        }).catch((err) => {
+            console.log('err with getting images', err)
+        })
+
+
+})
 
 app.post("/upload", uploder.single("file"), s3.upload, (req, res) => {
 

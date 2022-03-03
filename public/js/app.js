@@ -11,20 +11,22 @@ const app = Vue.createApp({
             file: null,
             images: [],
             checkForTruthy: false,
-            imageId: null
+            imageId: null,
+            isHidden: false
 
         }
     },
 
 
     mounted: function () {
-
+        console.log(this.images.length)
         fetch("/getImages")
             .then(resp => resp.json())
             .then(data => {
                 //console.log('data from /getImages', data);
 
                 this.images = data;
+                //isHidden = true
 
             }).catch(err => console.log('err', err))
 
@@ -80,22 +82,37 @@ const app = Vue.createApp({
 
         },
 
+        moreImage: function (lowestId) {
+            console.log('arg', lowestId)
+            // if (this.imageId == this.lowestId) {
+            //     console.log('first id ler esit')
+            // }
+            fetch(`/getMoreImages/${lowestId}`)
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log('getMoreImages...', data);
+                    console.log('getMoreImages...id', data[data.length - 1].id);
+                    // console.log('this.images...', this.images);
+                    if (data[data.length - 1].id == data[data.length - 1].lowestId) {
+                        this.isHidden = true
+                    }
+                    this.images = [...this.images, ...data]
+
+
+                }).catch(err => console.log('err', err))
+        },
+
         close: function () {
             this.checkForTruthy = false
         },
 
-        open: function (arg) {
+        open: function (clickedImg) {
             //console.log("arg", arg);
-            this.imageId = arg;
+            this.imageId = clickedImg;
             if (this.imageId) {
                 this.checkForTruthy = true
             }
-
-
         }
-
-
-
     }
 
 
