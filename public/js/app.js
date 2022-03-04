@@ -5,13 +5,13 @@ import modalComponent from './modalComponent.js';
 const app = Vue.createApp({
     data() {
         return {
+            error: "",
             title: "",
             description: "",
             username: "",
             file: null,
             images: [],
-            checkForTruthy: false,
-            imageId: null,
+            imageId: location.pathname.slice(1),
             isHidden: false
 
         }
@@ -19,14 +19,23 @@ const app = Vue.createApp({
 
 
     mounted: function () {
-        console.log(this.images.length)
+
+        // console.log(location.pathname.slice(1));
+        addEventListener("popstate", (e) => {
+            console.log("e.state", e.state);
+            console.log('location.pathname.slice(1)', location.pathname.slice(1))
+            this.imageId = location.pathname.slice(1);
+
+        });
+
+
         fetch("/getImages")
             .then(resp => resp.json())
             .then(data => {
                 //console.log('data from /getImages', data);
 
                 this.images = data;
-                //isHidden = true
+
 
             }).catch(err => console.log('err', err))
 
@@ -44,6 +53,16 @@ const app = Vue.createApp({
             this.file = e.target.files[0]
         },
         upload: function (e) {
+
+            if (
+                this.title === "" ||
+                this.username === "" ||
+                this.description === ""
+            ) {
+                this.error = "You must fill the all fields";
+
+                return;
+            }
             // e.preventDefault(); unless you prevent default in the html 
             //directly using vue SyntaxError, 
             //you would need to do it here, 
@@ -103,15 +122,17 @@ const app = Vue.createApp({
         },
 
         close: function () {
-            this.checkForTruthy = false
+            this.imageId = false;
+            history.pushState({}, "", "/");
+
+
         },
 
         open: function (clickedImg) {
             //console.log("arg", arg);
+            history.pushState({}, "", clickedImg)
             this.imageId = clickedImg;
-            if (this.imageId) {
-                this.checkForTruthy = true
-            }
+
         }
     }
 

@@ -23,13 +23,14 @@
       <h2>lastest images</h2>
     
   <div class="img_container" >
+    <div v-if="error">{{error}}</div>
    <div class="card" v-for="image in images">
         <img @click="open(image.id)" :src="image.url" v-bind:key="image.id"/>
         <p>{{image.title}}</p>
 
     </div>
 
-    <modal-component v-if="checkForTruthy" :img="imageId" @xclicked="close">
+    <modal-component v-if="imageId" :img="imageId" @xclicked="close">
        
     </modal-component>
 

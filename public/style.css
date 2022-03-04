@@ -8,7 +8,7 @@
 }
 .img_container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 354px));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 355px));
     grid-gap: 10px 10px;
 }
 .card {

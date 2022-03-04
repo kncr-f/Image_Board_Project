@@ -1,6 +1,7 @@
 const comments = {
     data() {
         return {
+            error: "",
             comments: [],
             comment: "",
             username: "",
@@ -13,7 +14,7 @@ const comments = {
         fetch(`/getComments/${this.imgchild}`)
             .then(resp => resp.json())
             .then(data => {
-                console.log('data from /getCommentsFromImgId', data);
+                //console.log('data from /getCommentsFromImgId', data);
                 this.comments = data;
 
 
@@ -26,7 +27,10 @@ const comments = {
 
         submit: function () {
             console.log('submit function running');
-
+            if (this.comment === "" || this.username === "") {
+                this.error = "You must fill the comment and username area";
+                return;
+            }
             fetch("/postComment", {
                 method: "POST",
                 headers: {
@@ -59,6 +63,7 @@ const comments = {
             <input  v-model="comment" type="text" name="comment" placeholder="comment">
             <input  v-model="username" type="text" name="username" placeholder="username">
             <button @click.prevent.default="submit">SUBMIT</button>
+            <div v-if="error">{{error}}</div>
             <div class="comments_area" v-for="comment in comments">
                 <p>{{comment.comment_text}}</p>
             </div>

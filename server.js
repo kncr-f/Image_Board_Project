@@ -49,10 +49,12 @@ app.get("/getImageFromId/:id", (req, res) => {
 
     db.getImageFromId(req.params.id)
         .then(({ rows }) => {
-            //console.log('rows', rows);
+            console.log('rows', rows);
             res.json(rows);
-        }).catch((err) => {
+        })
+        .catch((err) => {
             console.log('err with getting imageFromId', err)
+            // res.json({ success: false })
         })
 
 });

@@ -16,11 +16,23 @@ const modalComponent = {
         fetch(`/getImageFromId/${this.img}`)
             .then(resp => resp.json())
             .then(data => {
-                //console.log('data from /getImageFromId', data);
-                this.image = data[0];
-                //console.log('data', data[0])
+                console.log('data from /getImageFromId', data);
 
-            }).catch(err => console.log('err', err))
+                if (data.length == 0) {
+                    console.log('close the modal')
+                    this.$emit("xclicked");
+
+
+                } else {
+                    this.image = data[0];
+                    console.log('data', data[0].id)
+                }
+
+            }).catch((err) => {
+                console.log('err', err);
+
+
+            })
 
 
     },
@@ -31,8 +43,10 @@ const modalComponent = {
     methods: {
 
         closeModal: function () {
-            console.log('closeModal function running');
-            this.$emit("xclicked")
+            // console.log('closeModal function running');
+            this.$emit("xclicked");
+
+
         }
     },
 
