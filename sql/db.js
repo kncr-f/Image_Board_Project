@@ -24,7 +24,11 @@ module.exports.getImageFromId = (id) => {
                     images.url, 
                     images.username, 
                     images.title, 
-                    images.description 
+                    images.description,
+                    images.created_at,
+                    (SELECT id FROM images WHERE id < $1 ORDER BY id DESC LIMIT 1) AS "nextImgId",
+                    (SELECT id FROM images WHERE id > $1 LIMIT 1) AS "prevImgId"
+                    
                     FROM images 
                     WHERE images.id = $1`,
         [id]);
@@ -36,7 +40,8 @@ module.exports.getCommentsFromImgId = (id) => {
                     comments.comment_id, 
                     comments.comment_text, 
                     comments.comment_username, 
-                    comments.img_id
+                    comments.img_id,
+                    comments.created_at
                     FROM comments 
                     WHERE img_id = $1`,
         [id]);

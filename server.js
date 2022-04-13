@@ -27,15 +27,13 @@ const uploder = multer({
 
 app.use(express.static('./public'));
 
-app.use(express.json());    //this middleware helps us properly access 
-//incoming requests of content type application/json
-
+app.use(express.json());
 
 app.get("/getImages", (req, res) => {
 
     db.getAllImages()
         .then(({ rows }) => {
-            //console.log('rows', rows);
+
             res.json(rows);
         }).catch((err) => {
             console.log('err with getting images', err)
@@ -44,17 +42,15 @@ app.get("/getImages", (req, res) => {
 });
 
 app.get("/getImageFromId/:id", (req, res) => {
-    // console.log('req.body', req.body);
-    //console.log('req.params', req.params);
 
     db.getImageFromId(req.params.id)
         .then(({ rows }) => {
-            console.log('rows', rows);
+
             res.json(rows);
         })
         .catch((err) => {
             console.log('err with getting imageFromId', err)
-            // res.json({ success: false })
+
         })
 
 });
@@ -62,10 +58,10 @@ app.get("/getImageFromId/:id", (req, res) => {
 
 app.get("/getComments/:imageId", (req, res) => {
 
-    //console.log('req.params.id...', req.params.imageId)
+
     db.getCommentsFromImgId(req.params.imageId)
         .then(({ rows }) => {
-            //console.log('rows', rows);
+
             res.json(rows);
         }).catch((err) => {
             console.log('err with getting CommentsFromImgId', err)
@@ -77,7 +73,7 @@ app.get("/getMoreImages/:lowestId", (req, res) => {
 
     db.getMoreImages(req.params.lowestId)
         .then(({ rows }) => {
-            //console.log('rows', rows);
+
             res.json(rows);
         }).catch((err) => {
             console.log('err with getting images', err)
@@ -90,13 +86,13 @@ app.post("/upload", uploder.single("file"), s3.upload, (req, res) => {
 
     const { title, description, username } = req.body;
     let url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`
-    console.log("req.file...", req.file);
 
-    // console.log('req.body', req.body);
+
+
 
     db.uploadImage(url, username, title, description)
         .then(({ rows }) => {
-            //console.log("uploadImage in server...", rows);
+
             res.json(rows[0]);
         }).catch((err) => {
             console.log(err)
@@ -106,11 +102,11 @@ app.post("/upload", uploder.single("file"), s3.upload, (req, res) => {
 });
 
 app.post("/postComment", (req, res) => {
-    //console.log('req.body', req.body);
+
     const { comment, username, img_id } = req.body;
     db.uploadComment(comment, username, img_id)
         .then(({ rows }) => {
-            console.log("postComment rows..", rows)
+
             res.json(rows[0]);
         })
         .catch((err) => {
@@ -119,7 +115,7 @@ app.post("/postComment", (req, res) => {
 
 })
 
-// this route should come below any route that hte server has to serve data to hte client side
+
 app.get('*', (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });

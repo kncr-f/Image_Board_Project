@@ -10,20 +10,30 @@ const comments = {
     props: ["imgchild"],
 
     mounted() {
-        // console.log("comments_props...", this.imgchild);
-        fetch(`/getComments/${this.imgchild}`)
-            .then(resp => resp.json())
-            .then(data => {
-                //console.log('data from /getCommentsFromImgId', data);
-                this.comments = data;
 
+        this.getCommits();
 
-            }).catch(err => console.log('err', err))
+    },
 
+    watch: {
+        imgchild: function () {
+            this.getCommits();
+        }
     },
 
 
     methods: {
+
+        getCommits: function () {
+            fetch(`/getComments/${this.imgchild}`)
+                .then(resp => resp.json())
+                .then(data => {
+                    console.log('data from /getComments', data);
+                    this.comments = data;
+
+
+                }).catch(err => console.log('err', err))
+        },
 
         submit: function () {
             console.log('submit function running');
@@ -45,12 +55,18 @@ const comments = {
                 .then(resp => resp.json())
                 .then((resp) => {
                     console.log('resp in fetch / postComment in commnets component', resp)
-                    this.comments.unshift(resp)
+                    const date = new Date(resp.created_at);
+                    const cleanDate = new Intl.DateTimeFormat("en-GB", {
+                        dateStyle: "long",
+                        timeStyle: "short",
+                    }).format(date);
+                    resp.created_at = cleanDate;
+                    this.comments.unshift(resp);
+                    this.comment = "";
+                    this.username = "";
 
                 })
                 .catch(err => console.log('err in upload', err))
-
-
 
         }
     },
@@ -58,14 +74,19 @@ const comments = {
     template: `
 
      <div class='comments_component'>
-           <h1>Add a Comment! </h1>
+           <h3>Add a Comment! </h3>
           
             <input  v-model="comment" type="text" name="comment" placeholder="comment">
             <input  v-model="username" type="text" name="username" placeholder="username">
             <button @click.prevent.default="submit">SUBMIT</button>
             <div v-if="error">{{error}}</div>
+            <h4 class="commits_title">Commits</h4>
             <div class="comments_area" v-for="comment in comments">
-                <p>{{comment.comment_text}}</p>
+            
+              <ul>
+                <li>{{comment.comment_text}} - {{comment.created_at}} </li>
+              </ul>
+
             </div>
        
            
