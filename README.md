@@ -5,7 +5,7 @@ A single-page application made with Vue.js where anybody could go and post an im
 https://my-image-board.herokuapp.com/
 
 ## Overview
-I created this app with Vue.js. There are four input fields: image title, image description, username, and a file input for the image itself and a submit button. I used css-grid to repalce the images on the screen. In order to upload the images I used amazon web service S3 abilities.
+I created this app with Vue.js. There are four input fields: image title, image description, username, and a file input for the image itself and a submit button. I used css-grid to replace the images on the screen. In order to upload the images I used amazon web service S3 abilities.
 Users can navigate through the uploaded images by clicking on the direction arrows on both sides of the picture.
 
 ## Features
